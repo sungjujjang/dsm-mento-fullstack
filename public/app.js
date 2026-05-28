@@ -5,12 +5,21 @@ const formTitleEl = document.getElementById("form-title");
 const submitButtonEl = document.getElementById("submit-button");
 const cancelEditEl = document.getElementById("cancel-edit");
 const searchInputEl = document.getElementById("search-input");
+const totalCountEl = document.getElementById("total-count");
+const pinnedCountEl = document.getElementById("pinned-count");
 
 let editingId = null;
 let allMemos = [];
 
 function setStatus(message) {
   statusEl.textContent = message || "";
+  statusEl.animate(
+    [
+      { transform: "translateY(4px)", opacity: 0.45 },
+      { transform: "translateY(0)", opacity: 1 },
+    ],
+    { duration: 220, easing: "ease-out" }
+  );
 }
 
 function setBusy(isBusy) {
@@ -50,6 +59,19 @@ function escapeHtml(value) {
     .replaceAll("'", "&#039;");
 }
 
+function formatDate(value) {
+  if (!value) return "";
+  const date = new Date(String(value).replace(" ", "T"));
+  if (Number.isNaN(date.getTime())) return "";
+
+  return new Intl.DateTimeFormat("ko-KR", {
+    month: "short",
+    day: "numeric",
+    hour: "2-digit",
+    minute: "2-digit",
+  }).format(date);
+}
+
 function applySearchFilter() {
   const keyword = searchInputEl.value.trim().toLowerCase();
   const filtered = keyword
@@ -61,6 +83,7 @@ function applySearchFilter() {
     : allMemos;
 
   renderMemoList(filtered);
+  updateStats();
 }
 
 async function loadMemos() {
@@ -79,13 +102,16 @@ function renderMemoList(memos) {
   listEl.innerHTML = "";
 
   if (memos.length === 0) {
-    listEl.innerHTML = '<li class="empty">아직 메모가 없습니다.</li>';
+    listEl.innerHTML = '<li class="empty">아직 메모가 없어요.<br />첫 메모를 남겨보세요.</li>';
     return;
   }
 
   for (const memo of memos) {
     const item = document.createElement("li");
     item.className = `memo-card${memo.pinned ? " memo-card--pinned" : ""}`;
+    item.style.animationDelay = `${Math.min(listEl.children.length * 45, 240)}ms`;
+    item.style.setProperty("--card-tilt", listEl.children.length % 2 === 0 ? "-0.15deg" : "0.15deg");
+    const createdAt = formatDate(memo.created_at);
     item.innerHTML = `
       <div class="memo-card__body">
         <div class="memo-card__title-row">
@@ -93,6 +119,7 @@ function renderMemoList(memos) {
           ${memo.pinned ? '<span class="pin-badge">고정</span>' : ""}
         </div>
         <p>${escapeHtml(memo.content || "")}</p>
+        ${createdAt ? `<div class="memo-meta">${escapeHtml(createdAt)}</div>` : ""}
         ${
           memo.image_url
             ? `<img class="memo-image" src="${escapeHtml(memo.image_url)}" alt="" />`
@@ -109,6 +136,11 @@ function renderMemoList(memos) {
     `;
     listEl.appendChild(item);
   }
+}
+
+function updateStats() {
+  totalCountEl.textContent = String(allMemos.length);
+  pinnedCountEl.textContent = String(allMemos.filter((memo) => memo.pinned).length);
 }
 
 function resetEditMode() {

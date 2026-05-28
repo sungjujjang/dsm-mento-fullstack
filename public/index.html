@@ -3,48 +3,72 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Memo Board</title>
+    <title>Sweet Memo</title>
     <link rel="stylesheet" href="/styles.css" />
   </head>
   <body>
     <main class="app">
       <header class="app-header">
-        <div>
-          <p class="eyebrow">Week 4</p>
-          <h1>Memo Board</h1>
+        <div class="hero-copy">
+          <p class="eyebrow">Sweet little notes</p>
+          <h1>Sweet Memo</h1>
+          <p class="app-subtitle">짧은 생각, 오늘의 할 일, 남겨둘 링크까지 한 번에 모아두는 작은 메모장.</p>
+          <div class="quick-stats" aria-label="메모 상태 요약">
+            <span><strong id="total-count">0</strong> total</span>
+            <span><strong id="pinned-count">0</strong> pinned</span>
+          </div>
         </div>
-        <p id="status" class="status" aria-live="polite"></p>
+        <div class="hero-note">
+          <span class="hero-note__label">now</span>
+          <p id="status" class="status" aria-live="polite">준비됨</p>
+        </div>
       </header>
 
-      <section class="panel">
-        <h2 id="form-title">새 메모</h2>
-        <form id="memo-form">
-          <label>
-            제목
-            <input name="title" placeholder="제목을 입력하세요" required />
-          </label>
-          <label>
-            내용
-            <textarea name="content" placeholder="내용을 입력하세요"></textarea>
-          </label>
-          <label>
-            이미지 URL
-            <input name="image_url" placeholder="선택 사항" />
-          </label>
-          <div class="form-actions">
-            <button type="submit" id="submit-button">저장</button>
-            <button type="button" id="cancel-edit" hidden>취소</button>
+      <div class="workspace">
+        <section class="composer" aria-labelledby="form-title">
+          <div class="tape tape-left" aria-hidden="true"></div>
+          <div class="panel-heading">
+            <div>
+              <span class="panel-kicker">compose</span>
+              <h2 id="form-title">새 메모</h2>
+            </div>
+            <span class="panel-chip">sweet</span>
           </div>
-        </form>
-      </section>
+          <form id="memo-form">
+            <label class="field field-title">
+              <span>제목</span>
+              <input name="title" placeholder="예: 오늘 꼭 기억할 것" required />
+            </label>
+            <label class="field field-content">
+              <span>내용</span>
+              <textarea name="content" placeholder="메모 내용을 자유롭게 적어주세요."></textarea>
+            </label>
+            <label class="field field-url">
+              <span>이미지 URL</span>
+              <input name="image_url" placeholder="https://..." />
+            </label>
+            <div class="form-actions">
+              <button type="submit" id="submit-button">저장</button>
+              <button type="button" id="cancel-edit" hidden>취소</button>
+            </div>
+          </form>
+        </section>
 
-      <section class="panel">
-        <div class="list-header">
-          <h2>메모 목록</h2>
-          <input id="search-input" placeholder="제목 또는 내용 검색" />
-        </div>
-        <ul id="memo-list" class="memo-list"></ul>
-      </section>
+        <section class="memo-feed" aria-labelledby="memo-list-title">
+          <div class="tape tape-right" aria-hidden="true"></div>
+          <div class="list-header">
+            <div>
+              <span class="panel-kicker">collection</span>
+              <h2 id="memo-list-title">메모 목록</h2>
+              <p class="list-caption">고정한 메모가 먼저 보여요.</p>
+            </div>
+            <div class="search-wrap">
+              <input id="search-input" placeholder="제목 또는 내용 검색" />
+            </div>
+          </div>
+          <ul id="memo-list" class="memo-list"></ul>
+        </section>
+      </div>
     </main>
 
     <script src="/app.js"></script>
