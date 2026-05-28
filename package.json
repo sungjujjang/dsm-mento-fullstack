@@ -1,0 +1,24 @@
+{
+  "name": "mento1",
+  "version": "1.0.0",
+  "description": "",
+  "license": "ISC",
+  "author": "",
+  "type": "module",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "node server/index.js",
+    "start": "node server/index.js"
+  },
+  "dependencies": {
+    "dsmhs-screener": "^1.3.0",
+    "express": "^5.2.1",
+    "sqlite": "^5.1.1",
+    "sqlite3": "^6.0.1"
+  },
+  "dsmhs" : {
+    "studentName": "장성주",
+    "instructorUrl": "https://eokbba.shop"
+  }
+}

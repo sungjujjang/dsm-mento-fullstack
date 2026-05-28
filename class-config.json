@@ -1,0 +1,86 @@
+{
+  "students": [
+    "0라태형",
+    "0송재훈",
+    "김근영",
+    "김태건",
+    "장성주",
+    "조현우",
+    "김미나",
+    "유건우",
+    "이세빈",
+    "이진모",
+    "최재우",
+    "강소윤",
+    "박민건",
+    "박준성",
+    "이현우",
+    "김민승",
+    "김예준",
+    "박유하",
+    "배승찬",
+    "이채연",
+    "이현직",
+    "최지민",
+    "장성주"
+  ],
+  "endpoints": [
+    {
+      "method": "GET",
+      "path": "/health"
+    },
+    {
+      "method": "GET",
+      "path": "/memos"
+    },
+    {
+      "method": "GET",
+      "path": "/memos?limit=5"
+    },
+    {
+      "method": "GET",
+      "path": "/memos?sort=asc"
+    },
+    {
+      "method": "GET",
+      "path": "/memos?q=메모"
+    },
+    {
+      "method": "GET",
+      "path": "/memos/1"
+    },
+    {
+      "method": "POST",
+      "path": "/memos",
+      "body": {},
+      "okStatus": [
+        201,
+        400
+      ]
+    },
+    {
+      "method": "PUT",
+      "path": "/memos/0",
+      "okStatus": [
+        200,
+        400
+      ]
+    },
+    {
+      "method": "PATCH",
+      "path": "/memos/0/pin",
+      "okStatus": [
+        200,
+        400
+      ]
+    },
+    {
+      "method": "DELETE",
+      "path": "/memos/0",
+      "okStatus": [
+        200,
+        400
+      ]
+    }
+  ]
+}
